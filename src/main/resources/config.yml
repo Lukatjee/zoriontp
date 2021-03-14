@@ -1,0 +1,23 @@
+# -------------------------------- #
+#                                  #
+#           Permissions            #
+#                                  #
+# -------------------------------- #
+
+createPermission: "zoriontp.warp.create"
+teleportPermission: "zoriontp.warp.tp"
+
+# -------------------------------- #
+#                                  #
+#             Messages             #
+#                                  #
+# -------------------------------- #
+
+noPermission: "&cYou don't have the permission to execute this command."
+missingArgument: "&cIt seems like you forgot to include some useful information."
+
+warpCreated: "&7Successfully created playerwarp with name&a {0}."
+warpTeleported: "&7Successfully teleported to&a {0}."
+
+warpTaken: "&cA warp with that name already exists or can't be used."
+warpUnknown: "&cThis warp doesn't exist."

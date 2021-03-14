@@ -1,0 +1,9 @@
+name: ZorionTP
+version: ${project.version}
+main: eu.lukatjee.zoriontp.ZorionTP
+api-version: 1.16
+authors: [ Lukatjee ]
+description: This plugin gives your players the ability to make player warps so they can show their builds or make playershops.
+commands:
+  zoriontp:
+    description: This is the main command
