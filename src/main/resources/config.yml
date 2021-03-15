@@ -6,6 +6,9 @@
 
 createPermission: "zoriontp.warp.create"
 teleportPermission: "zoriontp.warp.tp"
+removePermission: "zoriontp.warp.remove"
+
+adminRemovePermission: "zoriontp.admin.remove"
 
 # -------------------------------- #
 #                                  #
@@ -17,11 +20,13 @@ helpText:
   - "&7/zoriontp&8 -&7 Display the help menu."
   - "&7/zoriontp <warp>&8 -&7 Teleport to a warp."
   - "&7/zoriontp create <warp>&8 -&7 Create a warp."
+  - "&7/zoriontp remove <warp>&8 -&7 Remove a warp."
 
 noPermission: "&cYou don't have the permission to execute this command."
 missingArgument: "&cIt seems like you forgot to include some useful information."
 
 warpCreated: "&7Successfully created playerwarp with name&a {0}."
+warpRemoved: "&7Successfully removed playerwarp with name&a {0}."
 warpTeleported: "&7Successfully teleported to&a {0}."
 
 warpTaken: "&cA warp with that name already exists or can't be used."

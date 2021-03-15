@@ -33,6 +33,7 @@ public class CreateCommand {
 
                         MainCommand.playerwarps_id.put(warpKey, coordinates);
                         MainCommand.playerwarps_world.put(warpKey, world);
+                        MainCommand.playerwarps_owner.put(warpKey, player.getUniqueId());
 
                         String warpCreatedMsg = warpCreated.replace("{0}", warpKey);
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&', warpCreatedMsg));
