@@ -13,6 +13,11 @@ teleportPermission: "zoriontp.warp.tp"
 #                                  #
 # -------------------------------- #
 
+helpText:
+  - "&7/zoriontp&8 -&7 Display the help menu."
+  - "&7/zoriontp <warp>&8 -&7 Teleport to a warp."
+  - "&7/zoriontp create <warp>&8 -&7 Create a warp."
+
 noPermission: "&cYou don't have the permission to execute this command."
 missingArgument: "&cIt seems like you forgot to include some useful information."
 
