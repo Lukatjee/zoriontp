@@ -16,8 +16,6 @@ public class TeleportCommand {
 
             final Player player = ((Player) sender).getPlayer();
             final String teleportPermission = ZorionTP.plugin.getConfig().getString("teleportPermission");
-            final String noPermission = ZorionTP.plugin.getConfig().getString("noPermission");
-            final String noPermissionMsg = ChatColor.translateAlternateColorCodes('&', noPermission);
 
             if (player.hasPermission(teleportPermission)) {
 
@@ -43,7 +41,7 @@ public class TeleportCommand {
 
             } else {
 
-                player.sendMessage(noPermissionMsg);
+                player.sendMessage(MainCommand.noPermissionMsg);
 
             }
 

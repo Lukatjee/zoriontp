@@ -8,17 +8,11 @@ import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class CreateCommand {
 
     public CreateCommand createCommand(CommandSender sender, String[] args) {
 
         final String createPermission = ZorionTP.plugin.getConfig().getString("createPermission");
-        final String noPermission = ZorionTP.plugin.getConfig().getString("noPermission");
-        final String noPermissionMsg = ChatColor.translateAlternateColorCodes('&', noPermission);
-        final List<String> commandArguments = Arrays.asList("create", "help");
 
         if (sender instanceof Player) {
 
@@ -31,7 +25,7 @@ public class CreateCommand {
                     final String warpCreated = ZorionTP.plugin.getConfig().getString("warpCreated");
                     final String warpKey = args[1];
 
-                    if (!MainCommand.playerwarps_id.containsKey(warpKey) && !commandArguments.contains(warpKey)) {
+                    if (!MainCommand.playerwarps_id.containsKey(warpKey) && !MainCommand.commandArguments.contains(warpKey)) {
 
                         final Location location = player.getLocation();
                         final World world = player.getWorld();
@@ -52,7 +46,7 @@ public class CreateCommand {
 
                 } else {
 
-                    player.sendMessage(noPermissionMsg);
+                    player.sendMessage(MainCommand.noPermissionMsg);
 
                 }
 

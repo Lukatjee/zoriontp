@@ -19,13 +19,20 @@ public class MainCommand implements CommandExecutor {
 
     public static Map<String, Integer[]> playerwarps_id = new HashMap<String, Integer[]>();
     public static Map<String, World> playerwarps_world = new HashMap<String, World>();
+    public static List<String> commandArguments;
+    public static String noPermissionMsg;
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
+        // Ugh... how do I describe this?
+
         final String noPermission = ZorionTP.plugin.getConfig().getString("noPermission");
-        final String noPermissionMsg = ChatColor.translateAlternateColorCodes('&', noPermission);
-        final List<String> commandArguments = Arrays.asList("create", "help");
+
+        // Public variables used in other classes
+
+        noPermissionMsg = ChatColor.translateAlternateColorCodes('&', noPermission);
+        commandArguments = Arrays.asList("create");
 
         if (args.length == 0) {
 
@@ -34,15 +41,21 @@ public class MainCommand implements CommandExecutor {
 
         } else {
 
+            // Command to create a warp
+
             if (args[0].equals("create")) {
 
                 CreateCommand create = new CreateCommand();
                 create.createCommand(sender, args);
 
+            // Command to display the help menu
+
             } else if (commandArguments.contains(args[0])) {
 
                 HelpCommand help = new HelpCommand();
                 help.helpCommand(sender);
+
+            // Command to teleport to a warp
 
             } else {
 
