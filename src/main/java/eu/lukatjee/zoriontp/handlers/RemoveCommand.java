@@ -2,10 +2,12 @@ package eu.lukatjee.zoriontp.handlers;
 
 import eu.lukatjee.zoriontp.ZorionTP;
 import eu.lukatjee.zoriontp.commands.MainCommand;
+import eu.lukatjee.zoriontp.sql.SQLGetter;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.List;
 import java.util.UUID;
 
 public class RemoveCommand {
@@ -23,18 +25,20 @@ public class RemoveCommand {
 
                     final String warpKey = args[1];
 
-                    if (MainCommand.playerwarps_id.containsKey(warpKey)) {
+                    SQLGetter read = new SQLGetter(ZorionTP.plugin);
+                    List<Object> result = read.readWarp(warpKey);
 
-                        final UUID warpPlayerUUID = MainCommand.playerwarps_owner.get(warpKey);
+                    if (result != null) {
+
+                        final UUID warpPlayerUUID = UUID.fromString(result.get(0).toString());
                         final String adminRemovePermission = ZorionTP.plugin.getConfig().getString("adminRemovePermission");
 
                         if (player.getUniqueId().equals(warpPlayerUUID) || player.hasPermission(adminRemovePermission)) {
 
                             final String warpRemoved = ChatColor.translateAlternateColorCodes('&', ZorionTP.plugin.getConfig().getString("warpRemoved").replace("{0}", warpKey));
 
-                            MainCommand.playerwarps_id.remove(warpKey);
-                            MainCommand.playerwarps_world.remove(warpKey);
-                            MainCommand.playerwarps_owner.remove(warpKey);
+                            SQLGetter remove = new SQLGetter(ZorionTP.plugin);
+                            remove.removeWarp(warpKey);
 
                             player.sendMessage(warpRemoved);
 
@@ -70,9 +74,8 @@ public class RemoveCommand {
             final String warpKey = args[1];
             final String warpRemoved = ChatColor.translateAlternateColorCodes('&', ZorionTP.plugin.getConfig().getString("warpRemoved").replace("{0}", warpKey));
 
-            MainCommand.playerwarps_id.remove(warpKey);
-            MainCommand.playerwarps_world.remove(warpKey);
-            MainCommand.playerwarps_owner.remove(warpKey);
+            SQLGetter remove = new SQLGetter(ZorionTP.plugin);
+            remove.removeWarp(warpKey);
 
             sender.sendMessage(warpRemoved);
 

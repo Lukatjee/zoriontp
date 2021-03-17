@@ -1,5 +1,20 @@
 # -------------------------------- #
 #                                  #
+#                SQL               #
+#                                  #
+# -------------------------------- #
+
+host: "localhost"
+port: "3306"
+database: "zoriontp"
+username: "root"
+password: ""
+
+# Only for experienced users
+arguments: "?useSSL=false&allowPublicKeyRetrieval=true"
+
+# -------------------------------- #
+#                                  #
 #           Permissions            #
 #                                  #
 # -------------------------------- #
@@ -24,6 +39,7 @@ helpText:
 
 noPermission: "&cYou don't have the permission to execute this command."
 missingArgument: "&cIt seems like you forgot to include some useful information."
+noOwnership: "&cIt seems like you're not the owner of this playerwarp."
 
 warpCreated: "&7Successfully created playerwarp with name&a {0}."
 warpRemoved: "&7Successfully removed playerwarp with name&a {0}."

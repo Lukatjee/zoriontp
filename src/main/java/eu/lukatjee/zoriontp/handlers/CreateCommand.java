@@ -2,11 +2,14 @@ package eu.lukatjee.zoriontp.handlers;
 
 import eu.lukatjee.zoriontp.ZorionTP;
 import eu.lukatjee.zoriontp.commands.MainCommand;
+import eu.lukatjee.zoriontp.sql.SQLGetter;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.List;
 
 public class CreateCommand {
 
@@ -25,15 +28,20 @@ public class CreateCommand {
                     final String warpCreated = ZorionTP.plugin.getConfig().getString("warpCreated");
                     final String warpKey = args[1];
 
-                    if (!MainCommand.playerwarps_id.containsKey(warpKey) && !MainCommand.commandArguments.contains(warpKey)) {
+                    SQLGetter read = new SQLGetter(ZorionTP.plugin);
+                    List<Object> result = read.readWarp(warpKey);
+
+                    if (result == null && !MainCommand.commandArguments.contains(warpKey)) {
 
                         final Location location = player.getLocation();
-                        final World world = player.getWorld();
-                        final Integer[] coordinates = {location.getBlockX(), location.getBlockY(), location.getBlockZ()};
+                        Integer x = location.getBlockX();
+                        Integer y = location.getBlockY();
+                        Integer z = location.getBlockZ();
 
-                        MainCommand.playerwarps_id.put(warpKey, coordinates);
-                        MainCommand.playerwarps_world.put(warpKey, world);
-                        MainCommand.playerwarps_owner.put(warpKey, player.getUniqueId());
+                        final World world = player.getWorld();
+
+                        SQLGetter create = new SQLGetter(ZorionTP.plugin);
+                        create.createWarp(player.getUniqueId(), warpKey, world.getName(), x, y, z);
 
                         String warpCreatedMsg = warpCreated.replace("{0}", warpKey);
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&', warpCreatedMsg));

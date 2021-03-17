@@ -2,11 +2,14 @@ package eu.lukatjee.zoriontp.handlers;
 
 import eu.lukatjee.zoriontp.ZorionTP;
 import eu.lukatjee.zoriontp.commands.MainCommand;
+import eu.lukatjee.zoriontp.sql.SQLGetter;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.List;
 
 public class TeleportCommand {
 
@@ -19,14 +22,20 @@ public class TeleportCommand {
 
             if (player.hasPermission(teleportPermission)) {
 
-                final String warpKey = args[0];
+                String warpKey = args[0];
 
-                if (MainCommand.playerwarps_id.containsKey(warpKey)) {
+                SQLGetter read = new SQLGetter(ZorionTP.plugin);
+                List<Object> result = read.readWarp(warpKey);
 
-                    final String warpTeleported = ZorionTP.plugin.getConfig().getString("warpTeleported");
-                    final World world = MainCommand.playerwarps_world.get(warpKey);
-                    final Integer[] coordinates = MainCommand.playerwarps_id.get(warpKey);
-                    final Location location = new Location(world, coordinates[0], coordinates[1], coordinates[2]);
+                if (result != null) {
+
+                    String warpTeleported = ZorionTP.plugin.getConfig().getString("warpTeleported");
+                    String worldString = result.get(2).toString();
+                    Integer x = Integer.parseInt(result.get(3).toString());
+                    Integer y = Integer.parseInt(result.get(4).toString());
+                    Integer z = Integer.parseInt(result.get(5).toString());
+
+                    Location location = new Location(Bukkit.getServer().getWorld(worldString), x, y, z);
 
                     player.teleport(location);
                     String warpTeleportedMsg = warpTeleported.replace("{0}", warpKey);
