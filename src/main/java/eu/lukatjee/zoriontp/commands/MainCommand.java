@@ -42,13 +42,6 @@ public class MainCommand implements CommandExecutor {
                 RemoveCommand remove = new RemoveCommand();
                 remove.removeCommand(sender, args);
 
-            // Command to display the help menu
-
-            } else if (commandArguments.contains(args[0])) {
-
-                HelpCommand help = new HelpCommand();
-                help.helpCommand(sender);
-
             // Command to teleport to a warp
 
             } else {
