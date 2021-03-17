@@ -19,6 +19,8 @@ public class SQLGetter {
 
     }
 
+    // Create a table on startup if it doesn't exist
+
     public void createTable() {
 
         PreparedStatement ps;
@@ -35,6 +37,8 @@ public class SQLGetter {
         }
 
     }
+
+    // Create a warp when called
 
     public void createWarp(UUID uuid, String key, String world, Integer x, Integer y, Integer z) {
 
@@ -60,6 +64,8 @@ public class SQLGetter {
         }
 
     }
+
+    // Read info on a warp and pass it on
 
     public List<Object> readWarp(String warpKey) {
 
@@ -97,6 +103,8 @@ public class SQLGetter {
 
         return null;
     }
+
+    // Remove a warp
 
     public void removeWarp(String warpKey) {
 

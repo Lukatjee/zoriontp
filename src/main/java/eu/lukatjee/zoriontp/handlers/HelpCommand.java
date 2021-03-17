@@ -8,6 +8,8 @@ public class HelpCommand {
 
     public void helpCommand(CommandSender sender) {
 
+        // Send help menu
+
         for (String text : ZorionTP.plugin.getConfig().getStringList("helpText")) {
 
             String message = ChatColor.translateAlternateColorCodes('&', text);

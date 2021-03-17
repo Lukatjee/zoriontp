@@ -1,10 +1,10 @@
 package eu.lukatjee.zoriontp.handlers;
 
 import eu.lukatjee.zoriontp.ZorionTP;
-import eu.lukatjee.zoriontp.commands.MainCommand;
 import eu.lukatjee.zoriontp.sql.SQLGetter;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -12,71 +12,97 @@ import java.util.UUID;
 
 public class RemoveCommand {
 
+    // Don't touch
+
+    FileConfiguration configuration = ZorionTP.plugin.getConfig();
+    SQLGetter read = new SQLGetter(ZorionTP.plugin);
+    SQLGetter remove = new SQLGetter(ZorionTP.plugin);
+    
     public RemoveCommand removeCommand(CommandSender sender, String[] args) {
 
         if (sender instanceof Player) {
 
-            final Player player = ((Player) sender).getPlayer();
-            final String removePermission = ZorionTP.plugin.getConfig().getString("removePermission");
+            // Player
+
+            Player player = ((Player) sender).getPlayer();
 
             if (args.length >=2) {
 
+                // Permission
+
+                String removePermission = configuration.getString("removePermission");
+
                 if (player.hasPermission(removePermission)) {
 
-                    final String warpKey = args[1];
+                    // Read sql result
 
-                    SQLGetter read = new SQLGetter(ZorionTP.plugin);
+                    String warpKey = args[1];
                     List<Object> result = read.readWarp(warpKey);
 
                     if (result != null) {
 
-                        final UUID warpPlayerUUID = UUID.fromString(result.get(0).toString());
-                        final String adminRemovePermission = ZorionTP.plugin.getConfig().getString("adminRemovePermission");
+                        // UUID and permission
+
+                        UUID warpPlayerUUID = UUID.fromString(result.get(0).toString());
+                        String adminRemovePermission = configuration.getString("adminRemovePermission");
 
                         if (player.getUniqueId().equals(warpPlayerUUID) || player.hasPermission(adminRemovePermission)) {
 
-                            final String warpRemoved = ChatColor.translateAlternateColorCodes('&', ZorionTP.plugin.getConfig().getString("warpRemoved").replace("{0}", warpKey));
+                            // Message
 
-                            SQLGetter remove = new SQLGetter(ZorionTP.plugin);
+                            String warpRemovedMsg = ChatColor.translateAlternateColorCodes('&', configuration.getString("warpRemoved").replace("{0}", warpKey));
+
+                            // Remove warp and send message
+
                             remove.removeWarp(warpKey);
-
-                            player.sendMessage(warpRemoved);
+                            player.sendMessage(warpRemovedMsg);
 
                         } else {
 
-                            String noOwnership = ChatColor.translateAlternateColorCodes('&', ZorionTP.plugin.getConfig().getString("noOwnership"));
+                            // No ownership
+
+                            String noOwnership = ChatColor.translateAlternateColorCodes('&', configuration.getString("noOwnership"));
                             player.sendMessage(noOwnership);
 
                         }
 
                     } else {
 
-                        String warpUnknown = ChatColor.translateAlternateColorCodes('&', ZorionTP.plugin.getConfig().getString("warpUnknown"));
-                        player.sendMessage(warpUnknown);
+                        // Warp unknown
+
+                        String warpUnknownMsg = ChatColor.translateAlternateColorCodes('&', configuration.getString("warpUnknown"));
+                        player.sendMessage(warpUnknownMsg);
 
                     }
 
                 } else {
 
-                    player.sendMessage(MainCommand.noPermissionMsg);
+                    // No permission
+
+                    String noPermissionMsg = ChatColor.translateAlternateColorCodes('&', configuration.getString("noPermission"));
+                    player.sendMessage(noPermissionMsg);
 
                 }
 
             } else {
 
-                final String missingArgument = ChatColor.translateAlternateColorCodes('&', ZorionTP.plugin.getConfig().getString("missingArgument"));
+                // An argument is missing
+
+                final String missingArgument = ChatColor.translateAlternateColorCodes('&', configuration.getString("missingArgument"));
                 player.sendMessage(missingArgument);
 
             }
 
         } else {
 
-            final String warpKey = args[1];
-            final String warpRemoved = ChatColor.translateAlternateColorCodes('&', ZorionTP.plugin.getConfig().getString("warpRemoved").replace("{0}", warpKey));
+            // Warp name and message
 
-            SQLGetter remove = new SQLGetter(ZorionTP.plugin);
+            String warpKey = args[1];
+            String warpRemoved = ChatColor.translateAlternateColorCodes('&', configuration.getString("warpRemoved").replace("{0}", warpKey));
+
+            // Remove warp and send message
+
             remove.removeWarp(warpKey);
-
             sender.sendMessage(warpRemoved);
 
         }
