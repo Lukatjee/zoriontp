@@ -19,8 +19,6 @@ public class MainCommand implements CommandExecutor {
 
         commandArguments = Arrays.asList("create", "remove", "''", "\"\"");
 
-        // Display help menu if no arguments are given
-
         if (args.length == 0) {
 
             HelpCommand help = new HelpCommand();
@@ -28,21 +26,15 @@ public class MainCommand implements CommandExecutor {
 
         } else {
 
-            // Command to create a warp
-
             if (args[0].equals("create")) {
 
                 CreateCommand create = new CreateCommand();
                 create.createCommand(sender, args);
 
-            // Command to remove a warp
-
             } else if (args[0].equals("remove")) {
 
                 RemoveCommand remove = new RemoveCommand();
                 remove.removeCommand(sender, args);
-
-            // Command to teleport to a warp
 
             } else {
 

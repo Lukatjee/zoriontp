@@ -26,16 +26,12 @@ public final class ZorionTP extends JavaPlugin {
 
         getCommand("zoriontp").setExecutor(new MainCommand());
 
-        // Connect to the database
-
         try {
             this.SQL.connect();
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
             Bukkit.getLogger().info("[ZorionTP] Couldn't connect to the database...");
         }
-
-        // Send message if connection was established successfully
 
         if (this.SQL.isConnected()) {
 

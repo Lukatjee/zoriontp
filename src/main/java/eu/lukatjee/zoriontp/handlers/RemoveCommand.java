@@ -12,8 +12,6 @@ import java.util.UUID;
 
 public class RemoveCommand {
 
-    // Don't touch
-
     FileConfiguration configuration = ZorionTP.plugin.getConfig();
     SQLGetter read = new SQLGetter(ZorionTP.plugin);
     SQLGetter remove = new SQLGetter(ZorionTP.plugin);
@@ -22,44 +20,30 @@ public class RemoveCommand {
 
         if (sender instanceof Player) {
 
-            // Player
-
             Player player = ((Player) sender).getPlayer();
 
             if (args.length >=2) {
 
-                // Permission
-
                 String removePermission = configuration.getString("removePermission");
 
                 if (player.hasPermission(removePermission)) {
-
-                    // Read sql result
 
                     String warpKey = args[1];
                     List<Object> result = read.readWarp(warpKey);
 
                     if (result != null) {
 
-                        // UUID and permission
-
                         UUID warpPlayerUUID = UUID.fromString(result.get(0).toString());
                         String adminRemovePermission = configuration.getString("adminRemovePermission");
 
                         if (player.getUniqueId().equals(warpPlayerUUID) || player.hasPermission(adminRemovePermission)) {
 
-                            // Message
-
                             String warpRemovedMsg = ChatColor.translateAlternateColorCodes('&', configuration.getString("warpRemoved").replace("{0}", warpKey));
-
-                            // Remove warp and send message
 
                             remove.removeWarp(warpKey);
                             player.sendMessage(warpRemovedMsg);
 
                         } else {
-
-                            // No ownership
 
                             String noOwnership = ChatColor.translateAlternateColorCodes('&', configuration.getString("noOwnership"));
                             player.sendMessage(noOwnership);
@@ -68,16 +52,12 @@ public class RemoveCommand {
 
                     } else {
 
-                        // Warp unknown
-
                         String warpUnknownMsg = ChatColor.translateAlternateColorCodes('&', configuration.getString("warpUnknown"));
                         player.sendMessage(warpUnknownMsg);
 
                     }
 
                 } else {
-
-                    // No permission
 
                     String noPermissionMsg = ChatColor.translateAlternateColorCodes('&', configuration.getString("noPermission"));
                     player.sendMessage(noPermissionMsg);
@@ -86,8 +66,6 @@ public class RemoveCommand {
 
             } else {
 
-                // An argument is missing
-
                 final String missingArgument = ChatColor.translateAlternateColorCodes('&', configuration.getString("missingArgument"));
                 player.sendMessage(missingArgument);
 
@@ -95,12 +73,8 @@ public class RemoveCommand {
 
         } else {
 
-            // Warp name and message
-
             String warpKey = args[1];
             String warpRemoved = ChatColor.translateAlternateColorCodes('&', configuration.getString("warpRemoved").replace("{0}", warpKey));
-
-            // Remove warp and send message
 
             remove.removeWarp(warpKey);
             sender.sendMessage(warpRemoved);

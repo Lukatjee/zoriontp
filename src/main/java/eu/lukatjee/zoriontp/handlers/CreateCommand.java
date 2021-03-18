@@ -14,8 +14,6 @@ import java.util.List;
 
 public class CreateCommand {
 
-    // Don't touch
-
     FileConfiguration configuration = ZorionTP.plugin.getConfig();
     SQLGetter read = new SQLGetter(ZorionTP.plugin);
     SQLGetter create = new SQLGetter(ZorionTP.plugin);
@@ -24,30 +22,20 @@ public class CreateCommand {
 
         if (sender instanceof Player) {
 
-            // Player
-
             Player player = ((Player) sender).getPlayer();
 
             if (args.length >= 2) {
 
-                // Permission
-
                 String createPermission = configuration.getString("createPermission");
 
                 if (player.hasPermission(createPermission)) {
-
-                    // Read sql result
 
                     String warpKey = args[1];
                     List<Object> result = read.readWarp(warpKey);
 
                     if (result == null && !MainCommand.commandArguments.contains(warpKey)) {
 
-                        // Messages
-
                         String warpCreatedMsg = ChatColor.translateAlternateColorCodes('&', configuration.getString("warpCreated").replace("{0}", warpKey));
-
-                        // Location variables
 
                         Location location = player.getLocation();
 
@@ -57,14 +45,10 @@ public class CreateCommand {
 
                         World world = player.getWorld();
 
-                        // Create warp
-
                         create.createWarp(player.getUniqueId(), warpKey, world.getName(), x, y, z);
                         player.sendMessage(warpCreatedMsg);
 
                     } else {
-
-                        // Name is taken
 
                         String warpTakenMsg = ChatColor.translateAlternateColorCodes('&', configuration.getString("warpTaken"));
                         player.sendMessage(warpTakenMsg);
@@ -73,8 +57,6 @@ public class CreateCommand {
 
                 } else {
 
-                    // No permission
-
                     String noPermissionMsg = ChatColor.translateAlternateColorCodes('&', configuration.getString("noPermission"));
                     player.sendMessage(noPermissionMsg);
 
@@ -82,16 +64,12 @@ public class CreateCommand {
 
             } else {
 
-                // Argument missing
-
                 String missingArgumentMsg = ChatColor.translateAlternateColorCodes('&', configuration.getString("missingArgument"));
                 sender.sendMessage(missingArgumentMsg);
 
             }
 
         } else {
-
-            // Tell console they're dumb
 
             System.out.println("Why would you want to set a playerwarp?");
 

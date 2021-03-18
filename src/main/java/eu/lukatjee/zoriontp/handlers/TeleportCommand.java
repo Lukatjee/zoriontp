@@ -13,8 +13,6 @@ import java.util.List;
 
 public class TeleportCommand {
 
-    // Don't touch
-
     FileConfiguration configuration = ZorionTP.plugin.getConfig();
     SQLGetter read = new SQLGetter(ZorionTP.plugin);
 
@@ -22,21 +20,15 @@ public class TeleportCommand {
 
         if (sender instanceof Player) {
 
-            // Player and permission
-
             Player player = ((Player) sender).getPlayer();
             String teleportPermission = configuration.getString("teleportPermission");
 
             if (player.hasPermission(teleportPermission)) {
 
-                // Read sql result
-
                 String warpKey = args[0];
                 List<Object> result = read.readWarp(warpKey);
 
                 if (result != null) {
-
-                    // SQL data
 
                     String warpTeleported = ZorionTP.plugin.getConfig().getString("warpTeleported");
                     String worldString = result.get(2).toString();
@@ -44,19 +36,13 @@ public class TeleportCommand {
                     Integer y = Integer.parseInt(result.get(4).toString());
                     Integer z = Integer.parseInt(result.get(5).toString());
 
-                    // Create location and teleport player
-
                     Location location = new Location(Bukkit.getServer().getWorld(worldString), x, y, z);
                     player.teleport(location);
-
-                    // Send message
 
                     String warpTeleportedMsg = ChatColor.translateAlternateColorCodes('&', configuration.getString("warpTeleported").replace("{0}", warpKey));
                     player.sendMessage(warpTeleportedMsg);
 
                 } else {
-
-                    // Warp is not in database
 
                     String warpUnknownMsg = ChatColor.translateAlternateColorCodes('&', configuration.getString("warpUnknown"));
                     player.sendMessage(warpUnknownMsg);
@@ -64,8 +50,6 @@ public class TeleportCommand {
                 }
 
             } else {
-
-                // No Permission
 
                 String noPermissionMsg = ChatColor.translateAlternateColorCodes('&', configuration.getString("noPermission"));
                 player.sendMessage(noPermissionMsg);

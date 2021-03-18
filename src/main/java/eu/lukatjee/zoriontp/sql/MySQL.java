@@ -13,8 +13,6 @@ public class MySQL {
 
     FileConfiguration configuration = ZorionTP.plugin.getConfig();
 
-    // SQL login data
-
     private String host = configuration.getString("host");
     private String port = configuration.getString("port");
     private String database = configuration.getString("database");
@@ -25,15 +23,11 @@ public class MySQL {
 
     private Connection connection;
 
-    // Check if there is a connection
-
     public boolean isConnected() {
 
         return (connection != null);
 
     }
-
-    // Connect if there's no connection
 
     public void connect() throws ClassNotFoundException, SQLException {
 
@@ -44,8 +38,6 @@ public class MySQL {
         }
 
     }
-
-    // Disconnect
 
     public void disconnect() {
 
@@ -64,8 +56,6 @@ public class MySQL {
         }
 
     }
-
-    // Get the connection
 
     public Connection getConnection() {
 
